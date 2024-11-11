@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+		<Property name="basePath">/sms-v2</Property>
+	</Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <patternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c:%L - %m%n" />
+        </Console>
+        <RollingFile name="RollingFileAppender" fileName="${basePath}/app.log" filePattern="${basePath}/app-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c:%L - %m%n"/>
+             <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+             <DefaultRolloverStrategy max="30">
+				<Delete basePath="${basePathr}" maxDepth="10">
+					<IfLastModified age="30d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
